@@ -10,10 +10,11 @@ export const SearchPage = () => {
   const [query, setQuery] = useState("");
 
   const filteredBooks = books.filter((book) => {
+    const titleMatch = book.title.toLowerCase().includes(query.toLowerCase());
+    const authorMatch = book.author_name.toLowerCase().includes(query.toLowerCase());
     if (query === "" || query === undefined) return false;
-    if (book.title.toLowerCase().includes(query.toLowerCase())) {
-      return book;
-    }
+
+    if (titleMatch || authorMatch) return true;
   });
 
   return (
@@ -25,7 +26,7 @@ export const SearchPage = () => {
         <input
           type="text"
           className="flex-1 p-3"
-          placeholder="Search books..."
+          placeholder="Search books by title or author..."
           value={query}
           onChange={(e) => setQuery(e.target.value)}
         />
